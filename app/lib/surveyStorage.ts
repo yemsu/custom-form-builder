@@ -1,30 +1,27 @@
 import ALERTS from '~/constants/alerts'
 import { generateTimeBasedId } from '~/lib/utils'
-import type { FormData } from '~/types/survey'
+import type { SurveyData } from '~/types/survey'
 
 const FORM_STORAGE = 'MY_FORMS'
 
-export const createForm = () => {
-	const newFormData = createNewFormData()
+export const createSurvey = () => {
+	const newSurvey = createNewSurveyData()
 	const savedData = loadSurveyList() || []
-	localStorage.setItem(
-		FORM_STORAGE,
-		JSON.stringify([...savedData, newFormData])
-	)
-	return newFormData
+	localStorage.setItem(FORM_STORAGE, JSON.stringify([...savedData, newSurvey]))
+	return newSurvey
 }
 
-export const saveForm = (formData: FormData) => {
-	localStorage.setItem(FORM_STORAGE, JSON.stringify(formData))
+export const saveSurvey = (survey: SurveyData) => {
+	localStorage.setItem(FORM_STORAGE, JSON.stringify(survey))
 	alert(ALERTS.SUCCESS.SAVE_FORM)
 }
 
 export const loadSurveyList = () => {
 	const savedStrData = localStorage.getItem(FORM_STORAGE)
-	return savedStrData ? (JSON.parse(savedStrData) as FormData[]) : null
+	return savedStrData ? (JSON.parse(savedStrData) as SurveyData[]) : null
 }
 
-export const loadForm = (surveyId: FormData['id']) => {
+export const loadSurvey = (surveyId: SurveyData['id']) => {
 	const savedSurveyList = loadSurveyList()
 	if (!savedSurveyList) {
 		alert(ALERTS.ERROR.NO_SAVED_FORM_LIST_DATA)
@@ -37,7 +34,7 @@ export const loadForm = (surveyId: FormData['id']) => {
 	return resultForm
 }
 
-export const deleteForm = (surveyId: FormData['id']) => {
+export const deleteSurvey = (surveyId: SurveyData['id']) => {
 	const isConfirmed = confirm(ALERTS.CONFIRM.DELETE_FORM)
 	if (!isConfirmed) return
 
@@ -52,9 +49,9 @@ export const deleteForm = (surveyId: FormData['id']) => {
 	return SurveyListResult
 }
 
-function createNewFormData() {
+function createNewSurveyData() {
 	const newId = generateTimeBasedId('F')
-	const newFormData: FormData = {
+	const newSurvey: SurveyData = {
 		id: newId,
 		title: '제목 없는 설문지',
 		description: '설문지 설명',
@@ -69,5 +66,5 @@ function createNewFormData() {
 			}
 		]
 	}
-	return newFormData
+	return newSurvey
 }

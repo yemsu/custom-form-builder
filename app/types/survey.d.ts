@@ -1,4 +1,4 @@
-export type FormData = {
+export type SurveyData = {
 	id: string
 	title: string
 	description: string

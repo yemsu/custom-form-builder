@@ -1,9 +1,9 @@
-import Container from '~/components/common/Container'
-import type { Route } from './+types/$surveyId.edit'
-import { useNavigate, useParams } from 'react-router'
 import { useEffect, useState } from 'react'
-import { loadForm } from '~/lib/formStorage'
-import type { FormData } from '~/types/survey'
+import { useNavigate, useParams } from 'react-router'
+import Container from '~/components/common/Container'
+import { loadSurvey } from '~/lib/surveyStorage'
+import type { SurveyData } from '~/types/survey'
+import type { Route } from './+types/$surveyId.edit'
 
 export function meta({}: Route.MetaArgs) {
 	return [
@@ -14,7 +14,7 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Edit() {
 	const { surveyId } = useParams()
-	const [formData, setFormData] = useState<FormData | null>(null)
+	const [survey, setSurvey] = useState<SurveyData | null>(null)
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -23,22 +23,22 @@ export default function Edit() {
 			navigate('/')
 			return
 		}
-		const savedFormData = loadForm(surveyId)
-		if (!savedFormData) {
+		const savedSurvey = loadSurvey(surveyId)
+		if (!savedSurvey) {
 			alert('존재하지 않는 양식입니다.')
 			navigate('/')
 			return
 		}
-		setFormData(savedFormData)
+		setSurvey(savedSurvey)
 	}, [surveyId])
 
 	return (
 		<Container>
-			{formData && (
+			{survey && (
 				<div>
-					<input value={formData.title} />
-					<input value={formData.description} />
-					{formData.items?.map((item) => (
+					<input value={survey.title} />
+					<input value={survey.description} />
+					{survey.items?.map((item) => (
 						<div key={item.id}>
 							<p>{item.question}</p>
 						</div>
