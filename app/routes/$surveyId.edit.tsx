@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import Container from '~/components/common/Container'
-import { loadSurvey } from '~/lib/surveyStorage'
+import { ERROR_MESSAGE, ERROR_TYPE } from '~/constants/error'
+import { AppError } from '~/lib/appError'
+import useErrorStore from '~/store/errorStore'
+import useSurveyListStore from '~/store/surveyListStore'
 import type { SurveyData } from '~/types/survey'
 import type { Route } from './+types/$surveyId.edit'
 
@@ -13,24 +16,39 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Edit() {
-	const { surveyId } = useParams()
+	const { surveyList, isLoading, setIsLoading, loadSurveyList } =
+		useSurveyListStore()
+	const { handleError } = useErrorStore()
 	const [survey, setSurvey] = useState<SurveyData | null>(null)
-	const navigate = useNavigate()
+	const { surveyId = '' } = useParams()
 
 	useEffect(() => {
-		if (!surveyId) {
-			alert('잘못된 접근입니다.')
-			navigate('/')
-			return
+		if (isLoading) {
+			try {
+				loadSurveyList()
+			} catch (e) {
+				handleError(e)
+			}
 		}
-		const savedSurvey = loadSurvey(surveyId)
+		setIsLoading(false)
+	}, [])
+
+	useEffect(() => {
+		console.log(22)
+		if (isLoading) return
+		const savedSurvey = surveyList.find(({ id }) => id === surveyId)
 		if (!savedSurvey) {
-			alert('존재하지 않는 양식입니다.')
-			navigate('/')
+			handleError(
+				new AppError(
+					ERROR_TYPE.CANNOT_FIND_SURVEY,
+					ERROR_MESSAGE[ERROR_TYPE.CANNOT_FIND_SURVEY](surveyId),
+					true
+				)
+			)
 			return
 		}
 		setSurvey(savedSurvey)
-	}, [surveyId])
+	}, [surveyId, surveyList])
 
 	return (
 		<Container>

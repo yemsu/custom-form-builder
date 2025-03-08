@@ -1,48 +1,45 @@
-import { useEffect, useState } from 'react'
-import Title from '~/components/common/Title'
 import SurveyListItem, {
 	SurveyListItemSkeleton
 } from '~/components/survey/SurveyListItem'
-import { loadSurveyList } from '~/lib/surveyStorage'
-import type { SurveyData } from '~/types/survey'
+import useSurveyListStore from '~/store/surveyListStore'
 
 type SurveyListProps = {}
 
 export default function SurveyList({}: SurveyListProps) {
-	const [surveyList, setSurveyList] = useState<SurveyData[] | null>(null)
+	const { surveyList, isLoading, errorMessage } = useSurveyListStore()
 
-	useEffect(() => {
-		const loadedSurveyList = loadSurveyList()
-		setSurveyList(loadedSurveyList)
-	}, [])
+	if (isLoading) {
+		return (
+			<SurveyListSkeleton>
+				<SurveyListItemSkeleton />
+				<SurveyListItemSkeleton />
+				<SurveyListItemSkeleton />
+			</SurveyListSkeleton>
+		)
+	}
+
+	if (errorMessage) {
+		return (
+			<div className="flex h-[400px] items-center justify-center bg-white/10 p-6">
+				<p className="text-gray-400">{errorMessage}</p>
+			</div>
+		)
+	}
+
+	if (surveyList.length === 0) {
+		return (
+			<div className="flex h-[400px] items-center justify-center bg-white/10 p-6">
+				<p className="text-gray-400">새 양식을 만들어보세요!</p>
+			</div>
+		)
+	}
 
 	return (
-		<>
-			<Title>내 양식{surveyList && `(${surveyList.length})`}</Title>
-			{!surveyList && (
-				<SurveyListSkeleton>
-					<SurveyListItemSkeleton />
-					<SurveyListItemSkeleton />
-					<SurveyListItemSkeleton />
-				</SurveyListSkeleton>
-			)}
-			{surveyList &&
-				(surveyList.length > 0 ? (
-					<ul className="grid grid-cols-5 gap-4">
-						{surveyList.map((survey) => (
-							<SurveyListItem
-								key={survey.id}
-								survey={survey}
-								setSurveyList={setSurveyList}
-							/>
-						))}
-					</ul>
-				) : (
-					<div className="flex h-[400px] items-center justify-center bg-white/10 p-6">
-						<p className="text-gray-400">새 양식을 만들어보세요!</p>
-					</div>
-				))}
-		</>
+		<ul className="grid grid-cols-5 gap-4">
+			{surveyList.map((survey) => (
+				<SurveyListItem key={survey.id} survey={survey} />
+			))}
+		</ul>
 	)
 }
 

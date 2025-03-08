@@ -1,10 +1,14 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import Container from '~/components/common/Container'
+import Section from '~/components/common/Section'
 import Title from '~/components/common/Title'
 import SurveyList from '~/components/survey/SurveyList'
-import { createSurvey } from '~/lib/surveyStorage'
+import { generateTimeBasedId } from '~/lib/utils'
+import useSurveyListStore from '~/store/surveyListStore'
+import type { SurveyData } from '~/types/survey'
 import type { Route } from './+types/home'
-import Section from '~/components/common/Section'
+import useErrorStore from '~/store/errorStore'
 
 export function meta({}: Route.MetaArgs) {
 	return [
@@ -14,11 +18,28 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+	const { surveyList, addSurvey, loadSurveyList, setIsLoading, setError } =
+		useSurveyListStore()
+	const { handleError } = useErrorStore()
 	const navigate = useNavigate()
 
+	useEffect(() => {
+		try {
+			loadSurveyList()
+		} catch (e) {
+			setError(e)
+		}
+		setIsLoading(false)
+	}, [])
+
 	const onClickCreateEmptyForm = () => {
-		const newSurvey = createSurvey()
-		navigate(`${newSurvey.id}/edit`)
+		try {
+			const newSurvey = createNewSurveyData()
+			addSurvey(newSurvey)
+			navigate(`${newSurvey.id}/edit`)
+		} catch (e) {
+			handleError(e)
+		}
 	}
 
 	return (
@@ -37,8 +58,29 @@ export default function Home() {
 				</ul>
 			</Section>
 			<Section>
+				<Title>내 양식{surveyList && `(${surveyList.length})`}</Title>
 				<SurveyList />
 			</Section>
 		</Container>
 	)
+}
+
+function createNewSurveyData() {
+	const newId = generateTimeBasedId('F')
+	const newSurvey: SurveyData = {
+		id: newId,
+		title: '제목 없는 설문지',
+		description: '설문지 설명',
+		createdAt: new Date().toISOString(),
+		items: [
+			{
+				id: generateTimeBasedId('I'),
+				question: '제목 없는 질문',
+				answerType: 'radio',
+				value: '',
+				isRequired: false
+			}
+		]
+	}
+	return newSurvey
 }

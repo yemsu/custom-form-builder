@@ -55,7 +55,7 @@ export default function Button({
 		className
 	)
 
-	if (href && !type) {
+	if (href) {
 		return target === '_blank' ? (
 			<a href={href} className={baseClasses}>
 				{children}
