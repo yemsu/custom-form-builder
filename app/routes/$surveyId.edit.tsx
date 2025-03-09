@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import Container from '~/components/common/Container'
+import Section from '~/components/common/Section'
+import Title from '~/components/common/Title'
+import EditSurveyForm from '~/components/survey/EditSurveyForm'
 import { ERROR_MESSAGE, ERROR_TYPE } from '~/constants/error'
+import { SurveyFormProvider } from '~/contexts/SurveyFormContext'
 import { AppError } from '~/lib/appError'
 import useErrorStore from '~/store/errorStore'
 import useSurveyListStore from '~/store/surveyListStore'
-import Section from '~/components/common/Section'
-import Title from '~/components/common/Title'
 import type { SurveyData } from '~/types/survey'
 import type { Route } from './+types/$surveyId.edit'
-import EditSurvey from '~/components/survey/EditSurvey'
 
 export function meta({}: Route.MetaArgs) {
 	return [
@@ -56,7 +57,11 @@ export default function Edit() {
 		<Container>
 			<Section>
 				<Title>양식 수정</Title>
-				{survey && <EditSurvey survey={survey} />}
+				{survey && (
+					<SurveyFormProvider survey={survey}>
+						<EditSurveyForm survey={survey} />
+					</SurveyFormProvider>
+				)}
 			</Section>
 		</Container>
 	)

@@ -72,12 +72,13 @@ function createNewSurveyData() {
 		title: '제목 없는 설문지',
 		description: '설문지 설명',
 		createdAt: getCreatedAt(),
-		items: [
+		questions: [
 			{
 				id: generateTimeBasedId('I'),
 				question: '제목 없는 질문',
-				answerType: 'radio',
-				isRequired: false
+				type: 'input',
+				isRequired: false,
+				options: null
 			}
 		]
 	}

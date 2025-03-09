@@ -27,13 +27,13 @@ type ButtonTagProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 type ButtonProps = LinkTagProps | ButtonTagProps
 
-const sizeStyles: StyleMap<ButtonProps, 'size'> = {
-	sm: 'px-2 py-1.5 text-xs rounded-sm',
-	md: 'px-4 py-2 rounded-md ',
-	lg: ''
+const sizeStyles: StyleMap<ButtonProps['size']> = {
+	sm: 'px-2 h-input-h-sm text-xs rounded-sm',
+	md: 'px-4 h-input-h-md rounded-md ',
+	lg: 'h-input-h-lg'
 }
 
-const variantStyles: StyleMap<ButtonProps, 'variant'> = {
+const variantStyles: StyleMap<ButtonProps['variant']> = {
 	primary: 'bg-primary hover:opacity-90',
 	ghost: 'text-gray-400 hover:bg-white/10'
 }

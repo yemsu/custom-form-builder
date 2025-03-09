@@ -5,6 +5,8 @@ export const ERROR_TYPE = {
 	FAILED_LOAD_SURVEY: 'FAILED_LOAD_SURVEY',
 	FAILED_DELETE_SURVEY: 'FAILED_DELETE_SURVEY',
 	CANNOT_FIND_SURVEY: 'CANNOT_FIND_SURVEY',
+	FAILED_UPDATE_OPTION: 'FAILED_UPDATE_OPTION',
+	UNKNOWN_QUESTION_TYPE: 'UNKNOWN_QUESTION_TYPE',
 	UNKNOWN: 'UNKNOWN'
 } as const
 
@@ -19,5 +21,7 @@ export const ERROR_MESSAGE: Record<
 	FAILED_DELETE_SURVEY: () => '양식 삭제에 실패하였습니다.',
 	CANNOT_FIND_SURVEY: (surveyId: string) =>
 		`존재하지 않는 양식입니다. (id: ${surveyId})`,
+	FAILED_UPDATE_OPTION: () => '옵션을 업데이트할 수 없는 항목입니다.',
+	UNKNOWN_QUESTION_TYPE: () => '알 수 없는 질문 유형입니다.',
 	UNKNOWN: () => '알 수 없는 에러입니다.'
 }

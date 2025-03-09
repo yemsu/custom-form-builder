@@ -8,6 +8,11 @@
 	/* Colors */
 	--color-primary: #4d5fff;
 	--color-skeleton: var(--color-gray-800);
+
+	/* Sizes */
+	--spacing-input-h-sm: 30px;
+	--spacing-input-h-md: 45px;
+	--spacing-input-h-lg: 75px;
 }
 
 html,

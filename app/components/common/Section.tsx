@@ -7,7 +7,7 @@ type SectionProps = {
 	children: React.ReactNode
 }
 
-const sizeStyle: StyleMap<SectionProps, 'size'> = {
+const sizeStyle: StyleMap<SectionProps['size']> = {
 	sm: 'py-4',
 	md: 'py-8',
 	lg: 'py-12'

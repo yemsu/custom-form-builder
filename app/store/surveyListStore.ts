@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { EditSurveyFormData } from '~/components/survey/EditSurvey'
+import type { EditSurveyFormData } from '~/components/survey/EditSurveyForm'
 import { ERROR_TYPE } from '~/constants/error'
 import { AppError } from '~/lib/appError'
 import { getCreatedAt } from '~/lib/utils'

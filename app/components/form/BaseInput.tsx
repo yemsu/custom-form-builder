@@ -8,10 +8,10 @@ export type BaseInputProps = InputHTMLAttributes<HTMLInputElement> & {
 	sizeVariant?: Size3
 }
 
-const sizeVariants: StyleMap<BaseInputProps, 'sizeVariant'> = {
-	sm: 'text-sm h-8',
-	md: 'text-md h-10',
-	lg: 'text-[35px] h-18'
+const sizeVariants: StyleMap<BaseInputProps['sizeVariant']> = {
+	sm: 'text-sm h-input-h-sm',
+	md: 'text-md h-input-h-md',
+	lg: 'text-[35px] h-input-h-lg'
 }
 
 export default function BaseInput({

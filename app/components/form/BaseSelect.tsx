@@ -12,7 +12,10 @@ export default function BaseSelect({
 	...restProps
 }: BaseSelectProps) {
 	return (
-		<select className={cn('min-w-45 p-2', className)} {...restProps}>
+		<select
+			className={cn('h-input-h-md min-w-45 px-2', className)}
+			{...restProps}
+		>
 			{Object.keys(dataMap).map((type) => (
 				<option key={type} value={type}>
 					{dataMap[type as string]}

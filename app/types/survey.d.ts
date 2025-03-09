@@ -3,15 +3,26 @@ export type SurveyData = {
 	title: string
 	description: string
 	createdAt: string
-	items: QuestionData[]
+	questions: QuestionData[]
 }
 
-export type QuestionData = {
+type CommonQuestionData = {
 	id: string
 	question: string
-	answerType: FormQuestionType
 	isRequired: boolean
 }
+
+export type TextQuestionData = CommonQuestionData & {
+	type: 'input' | 'textarea'
+	options: null
+}
+
+export type SelectQuestionData = CommonQuestionData & {
+	type: 'radio' | 'checkbox' | 'dropdown'
+	options: { id: string; value: string }[]
+}
+
+export type QuestionData = TextQuestionData | SelectQuestionData
 
 export type FormQuestionType =
 	| 'input'
