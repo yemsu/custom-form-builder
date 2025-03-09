@@ -1,14 +1,13 @@
 import { createContext, useContext, type ReactNode } from 'react'
 import { useForm, type UseFormReturn } from 'react-hook-form'
-import type { EditSurveyFormData } from '~/components/survey/EditSurveyForm'
 import { ERROR_TYPE } from '~/constants/error'
 import { createNewQuestionData } from '~/lib/survey'
 import { generateTimeBasedId } from '~/lib/utils'
 import useErrorStore from '~/store/errorStore'
-import type { QuestionData, SurveyData } from '~/types/survey'
+import type { SurveyFormData, QuestionData, SurveyData } from '~/types/survey'
 
 type SurveyFormContextType = {
-	form: UseFormReturn<EditSurveyFormData>
+	form: UseFormReturn<SurveyFormData>
 	onChangeQuestionType: (question: QuestionData, index: number) => void
 	addQuestionOption: (questionIndex: number) => void
 	deleteQuestionOption: (questionIndex: number, optionId: string) => void
@@ -26,7 +25,7 @@ export function SurveyFormProvider({
 	children: ReactNode
 }) {
 	const { id, createdAt, ...defaultValues } = survey
-	const form = useForm<EditSurveyFormData>({
+	const form = useForm<SurveyFormData>({
 		defaultValues
 	})
 	const { handleError } = useErrorStore()

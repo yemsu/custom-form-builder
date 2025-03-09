@@ -8,11 +8,13 @@ type SectionProps = {
 }
 
 const sizeStyle: StyleMap<SectionProps['size']> = {
-	sm: 'py-4',
-	md: 'py-8',
-	lg: 'py-12'
+	sm: 'my-4',
+	md: 'my-8',
+	lg: 'my-12'
 }
 
 export default function Section({ size = 'md', children }: SectionProps) {
-	return <section className={cn(sizeStyle[size])}>{children}</section>
+	return (
+		<section className={cn('first:mt-0', sizeStyle[size])}>{children}</section>
+	)
 }

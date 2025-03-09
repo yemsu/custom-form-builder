@@ -7,13 +7,11 @@ import SectionBox from '~/components/survey/SectionBox'
 import { useSurveyForm } from '~/contexts/SurveyFormContext'
 import useErrorStore from '~/store/errorStore'
 import useSurveyListStore from '~/store/surveyListStore'
-import type { SurveyData } from '~/types/survey'
+import type { SurveyFormData, SurveyData } from '~/types/survey'
 
 type EditSurveyFormProps = {
 	survey: SurveyData
 }
-
-export type EditSurveyFormData = Omit<SurveyData, 'id' | 'createdAt'>
 
 export default function EditSurveyForm({ survey }: EditSurveyFormProps) {
 	const { updateSurvey } = useSurveyListStore()
@@ -23,7 +21,7 @@ export default function EditSurveyForm({ survey }: EditSurveyFormProps) {
 	const { register, handleSubmit, watch } = form
 	const questions = watch('questions')
 
-	const onSubmit: SubmitHandler<EditSurveyFormData> = (data) => {
+	const onSubmit: SubmitHandler<SurveyFormData> = (data) => {
 		try {
 			updateSurvey(survey.id, data)
 			navigate('/')

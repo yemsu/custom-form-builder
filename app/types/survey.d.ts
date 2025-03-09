@@ -30,3 +30,7 @@ export type QuestionType =
 	| 'radio'
 	| 'checkbox'
 	| 'dropdown'
+
+export type SurveyFormData = Omit<SurveyData, 'id' | 'createdAt'>
+
+export type SurveyTemplateData = Omit<SurveyData, 'createdAt'>

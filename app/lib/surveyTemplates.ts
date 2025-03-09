@@ -1,14 +1,14 @@
 import { createNewQuestionData } from '~/lib/survey'
-import type { SurveyData } from '~/types/survey'
+import type { SurveyTemplateData } from '~/types/survey'
 
-const emptySurveyTemplate: Omit<SurveyData, 'createdAt'> = {
+const emptySurveyTemplate: SurveyTemplateData = {
 	id: 'empty',
 	title: '제목 없는 설문지',
 	description: '설문지 설명',
 	questions: [createNewQuestionData()]
 }
 
-const contact: Omit<SurveyData, 'createdAt'> = {
+const contact: SurveyTemplateData = {
 	id: 'template1',
 	title: '연락처 정보',
 	description: '설문지 설명',
@@ -44,7 +44,7 @@ const contact: Omit<SurveyData, 'createdAt'> = {
 	]
 }
 
-const applyJob: Omit<SurveyData, 'createdAt'> = {
+const applyJob: SurveyTemplateData = {
 	id: 'template2',
 	title: '입사 지원',
 	description: '문의 사항은 example@example.com으로 메일 주세요.',
@@ -91,7 +91,7 @@ const applyJob: Omit<SurveyData, 'createdAt'> = {
 	]
 }
 
-const requestShirt: Omit<SurveyData, 'createdAt'> = {
+const requestShirt: SurveyTemplateData = {
 	id: 'template3',
 	title: '티셔츠 신청',
 	description: '티셔츠를 신청을 위해 이름 및 사이즈를 입력해주세요.',

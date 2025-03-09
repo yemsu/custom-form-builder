@@ -2,28 +2,28 @@ import Button from '~/components/common/Button'
 import Title from '~/components/common/Title'
 import PreviewQuestionAnswer from '~/components/survey/preview/PreviewQuestionAnswer'
 import SectionBox from '~/components/survey/SectionBox'
-import { useSurveyForm } from '~/contexts/SurveyFormContext'
+import type { SurveyFormData } from '~/types/survey'
 
-type SurveyPreviewProps = {}
+type SurveyPreviewProps = {
+	surveyFormData: SurveyFormData
+}
 
-function SurveyPreview({}: SurveyPreviewProps) {
-	const { form } = useSurveyForm()
-	const { watch } = form
-	const formData = watch()
+function SurveyPreview({ surveyFormData }: SurveyPreviewProps) {
+	const { title, description, questions } = surveyFormData
 	return (
 		<div>
-			<Title mb>실시간 미리보기</Title>
+			<Title mb>미리보기</Title>
 			<section>
 				<SectionBox>
-					<Title size="lg">{formData.title}</Title>
-					<p>{formData.description}</p>
-					{formData.questions.find((question) => question.isRequired) && (
+					<Title size="lg">{title}</Title>
+					<p>{description}</p>
+					{questions.find((question) => question.isRequired) && (
 						<p className="mt-2 text-xs text-red-400">
 							* 표시는 필수 질문입니다
 						</p>
 					)}
 				</SectionBox>
-				{formData.questions.map((question) => (
+				{questions.map((question) => (
 					<SectionBox key={question.id}>
 						<Title h="h3" size="sm">
 							{question.question}

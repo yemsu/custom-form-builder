@@ -1,18 +1,12 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useState } from 'react'
+import Button from '~/components/common/Button'
 import Container from '~/components/common/Container'
-import Section from '~/components/common/Section'
 import Title from '~/components/common/Title'
 import EditSurveyForm from '~/components/survey/EditSurveyForm'
-import { ERROR_MESSAGE, ERROR_TYPE } from '~/constants/error'
+import LiveSurveyPreview from '~/components/survey/LiveSurveyPreview'
 import { SurveyFormProvider } from '~/contexts/SurveyFormContext'
-import { AppError } from '~/lib/appError'
-import useErrorStore from '~/store/errorStore'
-import useSurveyListStore from '~/store/surveyListStore'
-import type { SurveyData } from '~/types/survey'
+import useLoadSurvey from '~/hooks/useLoadSurvey'
 import type { Route } from './+types/$surveyId.edit'
-import SurveyPreview from '~/components/survey/preview/SurveyPreview'
-import Button from '~/components/common/Button'
 
 export function meta({}: Route.MetaArgs) {
 	return [
@@ -22,43 +16,12 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Edit() {
-	const { surveyList, isLoading, setIsLoading, loadSurveyList } =
-		useSurveyListStore()
-	const { handleError } = useErrorStore()
-	const [survey, setSurvey] = useState<SurveyData | null>(null)
 	const [isOnPreview, setIsOnPreview] = useState(true)
-	const { surveyId = '' } = useParams()
+	const [survey] = useLoadSurvey()
 
 	const onClickTogglePreview = () => {
 		setIsOnPreview(!isOnPreview)
 	}
-
-	useEffect(() => {
-		if (isLoading) {
-			try {
-				loadSurveyList()
-			} catch (e) {
-				handleError(e)
-			}
-		}
-		setIsLoading(false)
-	}, [])
-
-	useEffect(() => {
-		if (isLoading) return
-		const savedSurvey = surveyList.find(({ id }) => id === surveyId)
-		if (!savedSurvey) {
-			handleError(
-				new AppError(
-					ERROR_TYPE.CANNOT_FIND_SURVEY,
-					ERROR_MESSAGE[ERROR_TYPE.CANNOT_FIND_SURVEY](surveyId),
-					true
-				)
-			)
-			return
-		}
-		setSurvey(savedSurvey)
-	}, [surveyId, surveyList])
 
 	return (
 		<>
@@ -75,8 +38,8 @@ export default function Edit() {
 							<EditSurveyForm survey={survey} />
 						</Container>
 						{isOnPreview && (
-							<Container className="bg-white/5">
-								<SurveyPreview />
+							<Container className="bg-white/5" scrollBox>
+								<LiveSurveyPreview />
 							</Container>
 						)}
 					</div>

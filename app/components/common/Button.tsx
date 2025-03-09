@@ -38,7 +38,7 @@ const sizeStyles: StyleMap<ButtonProps['size']> = {
 const variantStyles: StyleMap<ButtonProps['variant']> = {
 	primary:
 		'bg-primary hover:opacity-90 disabled:bg-gray-500 disabled:hover:opacity-100',
-	ghost: 'text-gray-400 hover:bg-white/10 hover:text-white'
+	ghost: 'opacity-70 hover:bg-white/10 hover:opacity-100'
 }
 
 export default function Button({

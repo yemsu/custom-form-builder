@@ -1,11 +1,12 @@
-import SurveyListItem, {
-	SurveyListItemSkeleton
-} from '~/components/survey/SurveyListItem'
+import { SurveyListItemSkeleton } from '~/components/survey/SurveyListItem'
 import useSurveyListStore from '~/store/surveyListStore'
+import type { SurveyData } from '~/types/survey'
 
-type SurveyListProps = {}
+type SurveyListProps = {
+	children: (survey: SurveyData) => React.ReactNode
+}
 
-export default function SurveyList({}: SurveyListProps) {
+export default function SurveyList({ children }: SurveyListProps) {
 	const { surveyList, isLoading, errorMessage } = useSurveyListStore()
 
 	if (isLoading) {
@@ -35,11 +36,11 @@ export default function SurveyList({}: SurveyListProps) {
 	}
 
 	return (
-		<ul className="grid grid-cols-5 gap-4">
-			{surveyList.map((survey) => (
-				<SurveyListItem key={survey.id} survey={survey} />
-			))}
-		</ul>
+		<>
+			<ul className="grid grid-cols-5 gap-4">
+				{surveyList.map((survey) => children(survey))}
+			</ul>
+		</>
 	)
 }
 

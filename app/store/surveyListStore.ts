@@ -1,9 +1,8 @@
 import { create } from 'zustand'
-import type { EditSurveyFormData } from '~/components/survey/EditSurveyForm'
 import { ERROR_TYPE } from '~/constants/error'
 import { AppError } from '~/lib/appError'
 import { getCreatedAt } from '~/lib/utils'
-import type { SurveyData } from '~/types/survey'
+import type { SurveyFormData, SurveyData } from '~/types/survey'
 
 interface SurveyListState {
 	surveyList: SurveyData[]
@@ -13,10 +12,7 @@ interface SurveyListState {
 	setError: (error: unknown) => void
 	loadSurveyList: () => void
 	addSurvey: (survey: SurveyData) => void
-	updateSurvey: (
-		surveyId: string,
-		editSurveyFormData: EditSurveyFormData
-	) => void
+	updateSurvey: (surveyId: string, surveyFormData: SurveyFormData) => void
 	deleteSurvey: (surveyId: string) => void
 }
 
@@ -57,14 +53,14 @@ const useSurveyListStore = create<SurveyListState>()((set, get) => ({
 			throw new AppError(ERROR_TYPE.FAILED_CREATE_SURVEY)
 		}
 	},
-	updateSurvey: (surveyId, editSurveyFormData) => {
+	updateSurvey: (surveyId, surveyFormData) => {
 		let isUpdated = false
 		const newSurveyList = get().surveyList.map((survey) => {
 			if (survey.id === surveyId) {
 				isUpdated = true
 				return {
 					...survey,
-					...editSurveyFormData,
+					...surveyFormData,
 					createdAt: getCreatedAt()
 				}
 			}
