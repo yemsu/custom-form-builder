@@ -47,7 +47,9 @@ const useSurveyListStore = create<SurveyListState>()((set, get) => ({
 	addSurvey: (survey) => {
 		try {
 			const surveyList = get().surveyList
-			const newSurveyList = [...surveyList, survey]
+			const newSurveyList = [...surveyList]
+			newSurveyList.unshift(survey)
+
 			localStorage.setItem(FORM_STORAGE, JSON.stringify(newSurveyList))
 
 			set(() => ({ surveyList: newSurveyList }))
