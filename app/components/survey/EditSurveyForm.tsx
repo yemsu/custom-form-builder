@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { type SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router'
 import Button from '~/components/common/Button'
@@ -7,7 +8,7 @@ import SectionBox from '~/components/survey/SectionBox'
 import { useSurveyForm } from '~/contexts/SurveyFormContext'
 import useErrorStore from '~/store/errorStore'
 import useSurveyListStore from '~/store/surveyListStore'
-import type { SurveyFormData, SurveyData } from '~/types/survey'
+import type { SurveyData, SurveyFormData } from '~/types/survey'
 
 type EditSurveyFormProps = {
 	survey: SurveyData
@@ -18,7 +19,7 @@ export default function EditSurveyForm({ survey }: EditSurveyFormProps) {
 	const { handleError } = useErrorStore()
 	const navigate = useNavigate()
 	const { form, addQuestion } = useSurveyForm()
-	const { register, handleSubmit, watch } = form
+	const { register, handleSubmit, watch, formState } = form
 	const questions = watch('questions')
 
 	const onSubmit: SubmitHandler<SurveyFormData> = (data) => {
@@ -29,6 +30,20 @@ export default function EditSurveyForm({ survey }: EditSurveyFormProps) {
 			handleError(e)
 		}
 	}
+
+	const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+		if (formState.isDirty) {
+			e.preventDefault()
+			return true
+		}
+	}
+
+	useEffect(() => {
+		window.addEventListener('beforeunload', handleBeforeUnload)
+		return () => {
+			window.removeEventListener('beforeunload', handleBeforeUnload)
+		}
+	}, [formState.isDirty])
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
