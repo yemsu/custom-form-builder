@@ -41,6 +41,7 @@ function TemplateList({ setCrrPreviewSurvey }: TemplateListProps) {
 					<button
 						className="hover:border-primary size-full rounded-md border border-gray-500 p-4 pb-8 text-sm"
 						onClick={() => onClickCreateSurvey(surveyTemplate)}
+						title="이 템플릿으로 양식 생성"
 					>
 						{surveyTemplate.id === 'empty' ? '빈 양식' : surveyTemplate.title}
 					</button>

@@ -46,7 +46,7 @@ export default function SurveyListItem({
 					'bg-primary/10 hover:bg-primary/20 hover:border-primary border-primary/50 block size-full border p-4',
 					baseShapeStyle
 				)}
-				title={survey.title}
+				title={`'${survey.title}' 편집하기`}
 			>
 				<Title h="h3" size="sm" className="line-clamp-1">
 					{survey.title}
