@@ -26,7 +26,9 @@ function TemplateList({ setCrrPreviewSurvey }: TemplateListProps) {
 				createdAt: getCreatedAt()
 			}
 			addSurvey(newSurvey)
-			navigate(`${newSurvey.id}/edit`)
+			setTimeout(() => {
+				navigate(`${newSurvey.id}/edit`)
+			}, 600)
 		} catch (e) {
 			handleError(e)
 		}

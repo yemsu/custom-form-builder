@@ -40,7 +40,7 @@ export default function Home() {
 					<TemplateList setCrrPreviewSurvey={setCrrPreviewSurvey} />
 				</Section>
 				<Section>
-					<Title>내 양식{surveyList && `(${surveyList.length})`}</Title>
+					<Title>내 양식 {surveyList && `(${surveyList.length})`}</Title>
 					<SurveyList>
 						{(survey) => (
 							<SurveyListItem
