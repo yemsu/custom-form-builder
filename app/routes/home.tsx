@@ -44,6 +44,7 @@ export default function Home() {
 					<SurveyList>
 						{(survey) => (
 							<SurveyListItem
+								key={survey.id}
 								survey={survey}
 								crrPreviewSurvey={survey}
 								setCrrPreviewSurvey={setCrrPreviewSurvey}
