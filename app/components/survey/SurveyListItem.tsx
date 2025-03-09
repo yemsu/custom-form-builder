@@ -33,8 +33,9 @@ export default function SurveyListItem({ survey }: SurveyListItemProps) {
 			<Link
 				to={`/${survey.id}/edit`}
 				className="bg-primary/10 hover:bg-primary/30 block w-full p-4"
+				title={survey.title}
 			>
-				<Title h="h3" size="sm">
+				<Title h="h3" size="sm" className="line-clamp-1">
 					{survey.title}
 				</Title>
 				<time dateTime={survey.createdAt} className="text-xs text-gray-300">
@@ -46,6 +47,7 @@ export default function SurveyListItem({ survey }: SurveyListItemProps) {
 					size="sm"
 					variant="ghost"
 					onClick={() => onClickDeleteForm(survey.id)}
+					title="양식 삭제"
 				>
 					삭제
 				</Button>

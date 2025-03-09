@@ -5,8 +5,11 @@ import { ERROR_MESSAGE, ERROR_TYPE } from '~/constants/error'
 import { AppError } from '~/lib/appError'
 import useErrorStore from '~/store/errorStore'
 import useSurveyListStore from '~/store/surveyListStore'
+import Section from '~/components/common/Section'
+import Title from '~/components/common/Title'
 import type { SurveyData } from '~/types/survey'
 import type { Route } from './+types/$surveyId.edit'
+import EditSurvey from '~/components/survey/EditSurvey'
 
 export function meta({}: Route.MetaArgs) {
 	return [
@@ -34,7 +37,6 @@ export default function Edit() {
 	}, [])
 
 	useEffect(() => {
-		console.log(22)
 		if (isLoading) return
 		const savedSurvey = surveyList.find(({ id }) => id === surveyId)
 		if (!savedSurvey) {
@@ -52,17 +54,10 @@ export default function Edit() {
 
 	return (
 		<Container>
-			{survey && (
-				<div>
-					<input value={survey.title} />
-					<input value={survey.description} />
-					{survey.items?.map((item) => (
-						<div key={item.id}>
-							<p>{item.question}</p>
-						</div>
-					))}
-				</div>
-			)}
+			<Section>
+				<Title>양식 수정</Title>
+				{survey && <EditSurvey survey={survey} />}
+			</Section>
 		</Container>
 	)
 }

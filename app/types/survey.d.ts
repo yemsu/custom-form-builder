@@ -3,18 +3,17 @@ export type SurveyData = {
 	title: string
 	description: string
 	createdAt: string
-	items?: FormItem[]
+	items: QuestionData[]
 }
 
-export type FormItem = {
+export type QuestionData = {
 	id: string
 	question: string
-	answerType: FormAnswerType
-	value: string
+	answerType: FormQuestionType
 	isRequired: boolean
 }
 
-export type FormAnswerType =
+export type FormQuestionType =
 	| 'input'
 	| 'textarea'
 	| 'radio'

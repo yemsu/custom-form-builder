@@ -4,7 +4,7 @@ import Container from '~/components/common/Container'
 import Section from '~/components/common/Section'
 import Title from '~/components/common/Title'
 import SurveyList from '~/components/survey/SurveyList'
-import { generateTimeBasedId } from '~/lib/utils'
+import { generateTimeBasedId, getCreatedAt } from '~/lib/utils'
 import useSurveyListStore from '~/store/surveyListStore'
 import type { SurveyData } from '~/types/survey'
 import type { Route } from './+types/home'
@@ -71,13 +71,12 @@ function createNewSurveyData() {
 		id: newId,
 		title: '제목 없는 설문지',
 		description: '설문지 설명',
-		createdAt: new Date().toISOString(),
+		createdAt: getCreatedAt(),
 		items: [
 			{
 				id: generateTimeBasedId('I'),
 				question: '제목 없는 질문',
 				answerType: 'radio',
-				value: '',
 				isRequired: false
 			}
 		]

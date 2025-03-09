@@ -26,3 +26,7 @@ button {
 a {
 	@apply inline-block;
 }
+
+select {
+	@apply bg-gray-800;
+}

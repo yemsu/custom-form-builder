@@ -43,6 +43,7 @@ export default function Button({
 	target,
 	type = 'button',
 	onClick,
+	title,
 	children,
 	size = 'md',
 	variant = 'primary',
@@ -68,7 +69,7 @@ export default function Button({
 	}
 
 	return (
-		<button type={type} onClick={onClick} className={baseClasses}>
+		<button type={type} onClick={onClick} title={title} className={baseClasses}>
 			{children}
 		</button>
 	)
