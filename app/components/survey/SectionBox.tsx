@@ -1,8 +1,19 @@
-type SurveySectionProps = { children: React.ReactNode }
+import type { HTMLAttributes } from 'react'
+import { cn } from '~/lib/utils'
 
-function SectionBox({ children }: SurveySectionProps) {
+type SurveySectionProps = HTMLAttributes<HTMLDivElement> & {
+	children: React.ReactNode
+}
+
+function SectionBox({ children, className, ...restProps }: SurveySectionProps) {
 	return (
-		<div className="flex flex-col gap-4 rounded-md border border-white/20 p-6 pt-4 not-first:mt-4">
+		<div
+			{...restProps}
+			className={cn(
+				'flex flex-col gap-4 rounded-md border border-white/20 p-6 pt-4 not-first:mt-4',
+				className
+			)}
+		>
 			{children}
 		</div>
 	)

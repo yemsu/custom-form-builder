@@ -4,11 +4,10 @@ import Container from '~/components/common/Container'
 import Section from '~/components/common/Section'
 import Title from '~/components/common/Title'
 import SurveyList from '~/components/survey/SurveyList'
-import { generateTimeBasedId, getCreatedAt } from '~/lib/utils'
-import useSurveyListStore from '~/store/surveyListStore'
-import type { SurveyData } from '~/types/survey'
-import type { Route } from './+types/home'
 import useErrorStore from '~/store/errorStore'
+import useSurveyListStore from '~/store/surveyListStore'
+import type { Route } from './+types/home'
+import { createNewSurveyData } from '~/lib/survey'
 
 export function meta({}: Route.MetaArgs) {
 	return [
@@ -63,24 +62,4 @@ export default function Home() {
 			</Section>
 		</Container>
 	)
-}
-
-function createNewSurveyData() {
-	const newId = generateTimeBasedId('F')
-	const newSurvey: SurveyData = {
-		id: newId,
-		title: '제목 없는 설문지',
-		description: '설문지 설명',
-		createdAt: getCreatedAt(),
-		questions: [
-			{
-				id: generateTimeBasedId('I'),
-				question: '제목 없는 질문',
-				type: 'input',
-				isRequired: false,
-				options: null
-			}
-		]
-	}
-	return newSurvey
 }

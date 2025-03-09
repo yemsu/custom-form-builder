@@ -35,11 +35,13 @@ function QuestionAnswerSelect({
 					</label>
 				</div>
 			))}
-			<div className="mt-2">
-				<Button size="sm" onClick={() => addQuestionOption(questionIndex)}>
-					옵션 추가
-				</Button>
-			</div>
+			<button
+				type="button"
+				className="text-primary mt-2 flex items-center gap-2 px-6 py-2 text-sm underline-offset-4 hover:underline hover:opacity-90"
+				onClick={() => addQuestionOption(questionIndex)}
+			>
+				+ 옵션 추가
+			</button>
 		</div>
 	)
 }

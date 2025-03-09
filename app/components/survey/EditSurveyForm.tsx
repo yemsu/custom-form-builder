@@ -19,7 +19,7 @@ export default function EditSurveyForm({ survey }: EditSurveyFormProps) {
 	const { updateSurvey } = useSurveyListStore()
 	const { handleError } = useErrorStore()
 	const navigate = useNavigate()
-	const { form } = useSurveyForm()
+	const { form, addQuestion } = useSurveyForm()
 	const { register, handleSubmit, watch } = form
 	const questions = watch('questions')
 
@@ -41,6 +41,13 @@ export default function EditSurveyForm({ survey }: EditSurveyFormProps) {
 			{questions.map((question, i) => (
 				<Question key={question.id} question={question} questionIndex={i} />
 			))}
+			<button
+				type="button"
+				className="mt-4 h-14 w-full rounded-md border border-white/20 hover:border-white/50"
+				onClick={addQuestion}
+			>
+				+ 질문 추가
+			</button>
 			<div className="mt-4 flex justify-center">
 				<Button type="submit">수정 완료</Button>
 			</div>

@@ -2,6 +2,7 @@ import { createContext, useContext, type ReactNode } from 'react'
 import { useForm, type UseFormReturn } from 'react-hook-form'
 import type { EditSurveyFormData } from '~/components/survey/EditSurveyForm'
 import { ERROR_TYPE } from '~/constants/error'
+import { createNewQuestionData } from '~/lib/survey'
 import { generateTimeBasedId } from '~/lib/utils'
 import useErrorStore from '~/store/errorStore'
 import type { QuestionData, SurveyData } from '~/types/survey'
@@ -11,6 +12,8 @@ type SurveyFormContextType = {
 	onChangeQuestionType: (question: QuestionData, index: number) => void
 	addQuestionOption: (questionIndex: number) => void
 	deleteQuestionOption: (questionIndex: number, optionId: string) => void
+	addQuestion: () => void
+	deleteQuestion: (questionId: string) => void
 }
 
 const SurveyFormContext = createContext<SurveyFormContextType | null>(null)
@@ -45,6 +48,18 @@ export function SurveyFormProvider({
 		}
 	}
 
+	const addQuestion = () => {
+		const newQuestionFormData = createNewQuestionData()
+		const prevOptions = getValues(`questions`)
+		setValue(`questions`, [...prevOptions, newQuestionFormData])
+	}
+
+	const deleteQuestion = (questionId: string) => {
+		const prevOptions = getValues(`questions`)
+		const questionsDeleted = prevOptions.filter(({ id }) => id !== questionId)
+		setValue(`questions`, questionsDeleted)
+	}
+
 	const addQuestionOption = (questionIndex: number) => {
 		const prevOptions = getValues(`questions.${questionIndex}.options`)
 		if (prevOptions === null) {
@@ -73,7 +88,9 @@ export function SurveyFormProvider({
 				form,
 				onChangeQuestionType,
 				addQuestionOption,
-				deleteQuestionOption
+				deleteQuestionOption,
+				addQuestion,
+				deleteQuestion
 			}}
 		>
 			{children}

@@ -17,12 +17,12 @@ export default function SurveyListItem({ survey }: SurveyListItemProps) {
 	const { deleteSurvey } = useSurveyListStore()
 	const { handleError } = useErrorStore()
 
-	const onClickDeleteForm = (surveyId: SurveyData['id']) => {
-		const isConfirmed = confirm(ALERTS.CONFIRM.DELETE_FORM)
+	const onClickDeleteForm = () => {
+		const isConfirmed = confirm(ALERTS.CONFIRM.DELETE_SURVEY(survey.title))
 		if (!isConfirmed) return
 		try {
-			deleteSurvey(surveyId)
-			alert(ALERTS.SUCCESS.DELETE_FORM)
+			deleteSurvey(survey.id)
+			alert(ALERTS.SUCCESS.DELETE_SURVEY)
 		} catch (e) {
 			handleError(e)
 		}
@@ -46,7 +46,7 @@ export default function SurveyListItem({ survey }: SurveyListItemProps) {
 				<Button
 					size="sm"
 					variant="ghost"
-					onClick={() => onClickDeleteForm(survey.id)}
+					onClick={() => onClickDeleteForm()}
 					title="양식 삭제"
 				>
 					삭제
