@@ -18,11 +18,13 @@ type CommonProps = {
 type LinkTagProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
 	onClick?: never
 	type?: never
+	disabled?: never
 } & CommonProps
 
 type ButtonTagProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	href?: never
 	target?: never
+	disabled?: boolean
 } & CommonProps
 
 type ButtonProps = LinkTagProps | ButtonTagProps
@@ -34,8 +36,9 @@ const sizeStyles: StyleMap<ButtonProps['size']> = {
 }
 
 const variantStyles: StyleMap<ButtonProps['variant']> = {
-	primary: 'bg-primary hover:opacity-90',
-	ghost: 'text-gray-400 hover:bg-white/10'
+	primary:
+		'bg-primary hover:opacity-90 disabled:bg-gray-500 disabled:hover:opacity-100',
+	ghost: 'text-gray-400 hover:bg-white/10 hover:text-white'
 }
 
 export default function Button({
@@ -44,6 +47,7 @@ export default function Button({
 	type = 'button',
 	onClick,
 	title,
+	disabled,
 	children,
 	size = 'md',
 	variant = 'primary',
@@ -69,7 +73,13 @@ export default function Button({
 	}
 
 	return (
-		<button type={type} onClick={onClick} title={title} className={baseClasses}>
+		<button
+			type={type}
+			onClick={onClick}
+			title={title}
+			disabled={disabled}
+			className={baseClasses}
+		>
 			{children}
 		</button>
 	)

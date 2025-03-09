@@ -1,21 +1,23 @@
 import type { InputHTMLAttributes, Ref } from 'react'
 
-export type BaseCheckBoxProps = Omit<
+export type BaseOptionInputProps = Omit<
 	InputHTMLAttributes<HTMLInputElement>,
 	'type'
 > & {
 	ref?: Ref<HTMLInputElement>
+	type: 'radio' | 'checkbox'
 	label: string
 }
 
-export default function BaseCheckBox({
+export default function BaseOptionInput({
+	type,
 	label,
 	className = '',
 	...restProps
-}: BaseCheckBoxProps) {
+}: BaseOptionInputProps) {
 	return (
 		<label className="flex gap-2">
-			<input {...restProps} type="checkbox" />
+			<input {...restProps} type={type} />
 			<span>{label}</span>
 		</label>
 	)

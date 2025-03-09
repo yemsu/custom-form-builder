@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import Button from '~/components/common/Button'
 import BaseInput from '~/components/form/BaseInput'
 import Question from '~/components/survey/question/Question'
+import SectionBox from '~/components/survey/SectionBox'
 import { useSurveyForm } from '~/contexts/SurveyFormContext'
 import useErrorStore from '~/store/errorStore'
 import useSurveyListStore from '~/store/surveyListStore'
@@ -33,10 +34,10 @@ export default function EditSurveyForm({ survey }: EditSurveyFormProps) {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<div className="flex flex-col gap-4 rounded-md border border-white/20 p-6 pt-4 not-first:mt-4">
+			<SectionBox>
 				<BaseInput className="w-full" sizeVariant="lg" {...register('title')} />
 				<BaseInput className="w-full" {...register('description')} />
-			</div>
+			</SectionBox>
 			{questions.map((question, i) => (
 				<Question key={question.id} question={question} questionIndex={i} />
 			))}

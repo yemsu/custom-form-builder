@@ -24,7 +24,7 @@ export type SelectQuestionData = CommonQuestionData & {
 
 export type QuestionData = TextQuestionData | SelectQuestionData
 
-export type FormQuestionType =
+export type QuestionType =
 	| 'input'
 	| 'textarea'
 	| 'radio'

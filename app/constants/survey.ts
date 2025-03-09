@@ -1,6 +1,6 @@
-import type { FormQuestionType } from '~/types/survey'
+import type { QuestionType } from '~/types/survey'
 
-export const SURVEY_QUESTION_TYPES: Record<FormQuestionType, string> = {
+export const SURVEY_QUESTION_TYPES: Record<QuestionType, string> = {
 	input: '단답형',
 	textarea: '장문형',
 	radio: '객관식',

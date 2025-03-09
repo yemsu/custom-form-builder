@@ -11,6 +11,8 @@ import useErrorStore from '~/store/errorStore'
 import useSurveyListStore from '~/store/surveyListStore'
 import type { SurveyData } from '~/types/survey'
 import type { Route } from './+types/$surveyId.edit'
+import SurveyPreview from '~/components/survey/preview/SurveyPreview'
+import Button from '~/components/common/Button'
 
 export function meta({}: Route.MetaArgs) {
 	return [
@@ -24,7 +26,12 @@ export default function Edit() {
 		useSurveyListStore()
 	const { handleError } = useErrorStore()
 	const [survey, setSurvey] = useState<SurveyData | null>(null)
+	const [isOnPreview, setIsOnPreview] = useState(true)
 	const { surveyId = '' } = useParams()
+
+	const onClickTogglePreview = () => {
+		setIsOnPreview(!isOnPreview)
+	}
 
 	useEffect(() => {
 		if (isLoading) {
@@ -54,15 +61,27 @@ export default function Edit() {
 	}, [surveyId, surveyList])
 
 	return (
-		<Container>
-			<Section>
-				<Title>양식 수정</Title>
-				{survey && (
-					<SurveyFormProvider survey={survey}>
-						<EditSurveyForm survey={survey} />
-					</SurveyFormProvider>
-				)}
-			</Section>
-		</Container>
+		<>
+			{survey && (
+				<SurveyFormProvider survey={survey}>
+					<div className="flex">
+						<Container>
+							<div className="mb-4 flex items-center justify-between">
+								<Title>양식 수정</Title>
+								<Button size="sm" onClick={onClickTogglePreview}>
+									👀 실시간 미리보기 {isOnPreview ? '닫기' : '열기'}
+								</Button>
+							</div>
+							<EditSurveyForm survey={survey} />
+						</Container>
+						{isOnPreview && (
+							<Container className="bg-white/5">
+								<SurveyPreview />
+							</Container>
+						)}
+					</div>
+				</SurveyFormProvider>
+			)}
+		</>
 	)
 }

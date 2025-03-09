@@ -9,6 +9,9 @@
 	--color-primary: #4d5fff;
 	--color-skeleton: var(--color-gray-800);
 
+	/* Font Size */
+	--text-xl: 35px;
+
 	/* Sizes */
 	--spacing-input-h-sm: 30px;
 	--spacing-input-h-md: 45px;
@@ -24,7 +27,7 @@ body {
 	}
 }
 
-button {
+button:not(:disabled) {
 	@apply cursor-pointer;
 }
 

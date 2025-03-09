@@ -3,11 +3,11 @@ import { cn } from '~/lib/utils'
 
 type BaseSelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
 	ref?: React.Ref<HTMLSelectElement>
-	dataMap: Record<string, string>
+	options: { id: string; value: string }[]
 }
 
 export default function BaseSelect({
-	dataMap,
+	options,
 	className,
 	...restProps
 }: BaseSelectProps) {
@@ -16,9 +16,9 @@ export default function BaseSelect({
 			className={cn('h-input-h-md min-w-45 px-2', className)}
 			{...restProps}
 		>
-			{Object.keys(dataMap).map((type) => (
-				<option key={type} value={type}>
-					{dataMap[type as string]}
+			{options.map((option) => (
+				<option key={option.id} value={option.id}>
+					{option.value}
 				</option>
 			))}
 		</select>

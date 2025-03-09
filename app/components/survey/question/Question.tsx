@@ -1,9 +1,11 @@
-import BaseCheckBox from '~/components/form/BaseCheckBox'
 import BaseInput from '~/components/form/BaseInput'
+import BaseOptionInput from '~/components/form/BaseOptionInput'
 import BaseSelect from '~/components/form/BaseSelect'
 import QuestionAnswer from '~/components/survey/question/QuestionAnswer'
+import SectionBox from '~/components/survey/SectionBox'
 import { SURVEY_QUESTION_TYPES } from '~/constants/survey'
 import { useSurveyForm } from '~/contexts/SurveyFormContext'
+import { typedObjectKeys } from '~/lib/utils'
 import type { QuestionData } from '~/types/survey'
 
 type QuestionProps = {
@@ -16,10 +18,7 @@ function Question({ question, questionIndex }: QuestionProps) {
 	const { register } = form
 
 	return (
-		<div
-			key={question.id}
-			className="flex flex-col gap-4 rounded-md border border-white/20 p-6 pt-4 not-first:mt-4"
-		>
+		<SectionBox key={question.id}>
 			<div className="flex gap-2">
 				<BaseInput
 					className="flex-1"
@@ -27,7 +26,10 @@ function Question({ question, questionIndex }: QuestionProps) {
 				/>
 				<BaseSelect
 					className="shrink-0"
-					dataMap={SURVEY_QUESTION_TYPES}
+					options={typedObjectKeys(SURVEY_QUESTION_TYPES).map((type) => ({
+						id: type,
+						value: SURVEY_QUESTION_TYPES[type]
+					}))}
 					{...register(`questions.${questionIndex}.type`, {
 						onChange: () => {
 							onChangeQuestionType(question, questionIndex)
@@ -36,11 +38,12 @@ function Question({ question, questionIndex }: QuestionProps) {
 				/>
 			</div>
 			<QuestionAnswer question={question} questionIndex={questionIndex} />
-			<BaseCheckBox
+			<BaseOptionInput
+				type="checkbox"
 				label="필수 항목"
 				{...register(`questions.${questionIndex}.isRequired`)}
 			/>
-		</div>
+		</SectionBox>
 	)
 }
 
