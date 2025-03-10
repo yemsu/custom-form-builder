@@ -37,7 +37,7 @@ export default function SurveyList({ children }: SurveyListProps) {
 
 	return (
 		<>
-			<ul className="grid grid-cols-5 gap-4">
+			<ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
 				{surveyList.map((survey) => children(survey))}
 			</ul>
 		</>
@@ -49,5 +49,9 @@ export function SurveyListSkeleton({
 }: {
 	children: React.ReactNode
 }) {
-	return <div className="grid grid-cols-5 gap-4">{children}</div>
+	return (
+		<div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
+			{children}
+		</div>
+	)
 }

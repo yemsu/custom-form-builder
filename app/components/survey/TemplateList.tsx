@@ -35,7 +35,7 @@ function TemplateList({ setCrrPreviewSurvey }: TemplateListProps) {
 	}
 
 	return (
-		<ul className="grid grid-cols-6 gap-4">
+		<ul className="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-4">
 			{surveyTemplates.map((surveyTemplate) => (
 				<li key={surveyTemplate.id} className="relative h-[75px]">
 					<button
