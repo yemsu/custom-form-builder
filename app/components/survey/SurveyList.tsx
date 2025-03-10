@@ -7,7 +7,8 @@ type SurveyListProps = {
 }
 
 export default function SurveyList({ children }: SurveyListProps) {
-	const { surveyList, isLoading, errorMessage } = useSurveyListStore()
+	const { surveyList, isLoading, errorMessage, surveyListSearched } =
+		useSurveyListStore()
 
 	if (isLoading) {
 		return (
@@ -35,10 +36,18 @@ export default function SurveyList({ children }: SurveyListProps) {
 		)
 	}
 
+	if (surveyListSearched?.length === 0) {
+		return (
+			<div className="flex h-[400px] items-center justify-center bg-white/10 p-6">
+				<p className="text-gray-400">검색 결과가 없습니다.</p>
+			</div>
+		)
+	}
+
 	return (
 		<>
 			<ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
-				{surveyList.map((survey) => children(survey))}
+				{(surveyListSearched || surveyList).map((survey) => children(survey))}
 			</ul>
 		</>
 	)

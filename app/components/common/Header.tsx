@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import SurveySearchBox from '~/components/survey/SurveySearchBox'
 
 type HeaderProps = {}
 
@@ -10,6 +11,9 @@ function Header({}: HeaderProps) {
 					Custom Form Builder
 				</Link>
 			</h1>
+			<div className="absolute left-1/2 -translate-x-1/2">
+				<SurveySearchBox />
+			</div>
 		</header>
 	)
 }

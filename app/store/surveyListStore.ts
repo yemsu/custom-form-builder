@@ -6,8 +6,10 @@ import type { SurveyFormData, SurveyData } from '~/types/survey'
 
 interface SurveyListState {
 	surveyList: SurveyData[]
+	surveyListSearched: SurveyData[] | null
 	isLoading: boolean
 	errorMessage: string | null
+	setSurveyListSearched: (surveyListSearched: SurveyData[] | null) => void
 	setIsLoading: (isLoading: boolean) => void
 	setError: (error: unknown) => void
 	loadSurveyList: () => void
@@ -20,8 +22,12 @@ const FORM_STORAGE = 'MY_FORMS'
 
 const useSurveyListStore = create<SurveyListState>()((set, get) => ({
 	surveyList: [],
+	surveyListSearched: null,
 	isLoading: true,
 	errorMessage: null,
+	setSurveyListSearched: (surveyListSearched) => {
+		set(() => ({ surveyListSearched }))
+	},
 	setIsLoading: (isLoading) => {
 		set(() => ({ isLoading }))
 	},

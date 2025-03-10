@@ -8,6 +8,7 @@ import SurveyList from '~/components/survey/SurveyList'
 import SurveyListItem from '~/components/survey/SurveyListItem'
 import TemplateList from '~/components/survey/TemplateList'
 import useLoadSurveyList from '~/hooks/useLoadSurveyList'
+import useSurveyListStore from '~/store/surveyListStore'
 import type { SurveyData, SurveyTemplateData } from '~/types/survey'
 
 export function meta() {
@@ -23,6 +24,7 @@ export type SetPreviewSurvey = React.Dispatch<
 >
 
 export default function Home() {
+	const { surveyListSearched } = useSurveyListStore()
 	const [surveyList] = useLoadSurveyList()
 	const [crrPreviewSurvey, setCrrPreviewSurvey] =
 		useState<PreviewSurveyData>(null)
@@ -35,7 +37,9 @@ export default function Home() {
 					<TemplateList setCrrPreviewSurvey={setCrrPreviewSurvey} />
 				</Section>
 				<Section>
-					<Title>내 양식 {surveyList && `(${surveyList.length})`}</Title>
+					<Title>
+						내 양식 {`(${(surveyListSearched || surveyList).length})`}
+					</Title>
 					<SurveyList>
 						{(survey) => (
 							<SurveyListItem
