@@ -13,6 +13,9 @@
 	--text-xl: 35px;
 
 	/* Sizes */
+	--spacing-header-h: 60px;
+	--spacing-container-h: calc(100dvh - var(--spacing-header-h));
+
 	--spacing-input-h-sm: 30px;
 	--spacing-input-h-md: 45px;
 	--spacing-input-h-lg: 75px;

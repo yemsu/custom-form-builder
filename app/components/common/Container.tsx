@@ -16,8 +16,8 @@ export default function Container({
 		<div
 			{...restProps}
 			className={cn(
-				'mx-auto min-h-[100dvh] w-[1000px] max-w-full px-6 py-8',
-				scrollBox && 'sticky top-0 max-h-[100dvh] overflow-auto',
+				'min-h-container-h mx-auto w-[1000px] max-w-full px-6 py-8',
+				scrollBox && 'h-container-h sticky top-0 overflow-auto',
 				className
 			)}
 		>
