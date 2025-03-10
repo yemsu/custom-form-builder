@@ -6,9 +6,8 @@ import EditSurveyForm from '~/components/survey/EditSurveyForm'
 import LiveSurveyPreview from '~/components/survey/LiveSurveyPreview'
 import { SurveyFormProvider } from '~/contexts/SurveyFormContext'
 import useLoadSurvey from '~/hooks/useLoadSurvey'
-import type { Route } from './+types/$surveyId.edit'
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
 	return [
 		{ title: 'Edit Form | Custom Form Builder' },
 		{ name: 'description', content: 'Edit custom forms quickly and easily!' }

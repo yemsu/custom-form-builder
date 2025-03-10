@@ -1,21 +1,16 @@
 import { useState } from 'react'
+import Button from '~/components/common/Button'
 import Container from '~/components/common/Container'
 import Section from '~/components/common/Section'
 import Title from '~/components/common/Title'
 import SurveyPreview from '~/components/survey/preview/SurveyPreview'
 import SurveyList from '~/components/survey/SurveyList'
+import SurveyListItem from '~/components/survey/SurveyListItem'
 import TemplateList from '~/components/survey/TemplateList'
 import useLoadSurveyList from '~/hooks/useLoadSurveyList'
-import type {
-	SurveyData,
-	SurveyFormData,
-	SurveyTemplateData
-} from '~/types/survey'
-import type { Route } from './+types/home'
-import Button from '~/components/common/Button'
-import SurveyListItem from '~/components/survey/SurveyListItem'
+import type { SurveyData, SurveyTemplateData } from '~/types/survey'
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
 	return [
 		{ title: 'Custom Form Builder' },
 		{ name: 'description', content: 'Create custom forms quickly and easily!' }

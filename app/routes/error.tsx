@@ -1,10 +1,9 @@
 import { useLocation } from 'react-router'
-import type { Route } from './+types/error'
 import Container from '~/components/common/Container'
 import Title from '~/components/common/Title'
 import Button from '~/components/common/Button'
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
 	return [
 		{ title: 'Error | Custom Form Builder' },
 		{ name: 'description', content: 'Error' }
