@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { ERROR_TYPE } from '~/constants/error'
+import { ERROR_MESSAGE, ERROR_TYPE } from '~/constants/error'
 import { AppError } from '~/lib/appError'
 import { getCreatedAt } from '~/lib/utils'
 import type { SurveyFormData, SurveyData } from '~/types/survey'
@@ -60,38 +60,47 @@ const useSurveyListStore = create<SurveyListState>()((set, get) => ({
 		}
 	},
 	updateSurvey: (surveyId, surveyFormData) => {
-		let isUpdated = false
-		const newSurveyList = get().surveyList.map((survey) => {
-			if (survey.id === surveyId) {
-				isUpdated = true
-				return {
-					...survey,
-					...surveyFormData,
-					createdAt: getCreatedAt()
-				}
-			}
-			return survey
-		})
-		if (!isUpdated) {
+		const surveyList = get().surveyList || []
+		const targetSurvey = surveyList.find(({ id }) => id === surveyId)
+		if (!targetSurvey) {
+			throw new AppError(
+				ERROR_TYPE.CANNOT_FIND_SURVEY,
+				ERROR_MESSAGE.CANNOT_FIND_SURVEY(surveyId)
+			)
+		}
+
+		try {
+			const newSurveyList = get().surveyList.map((survey) =>
+				survey.id === surveyId
+					? {
+							...survey,
+							...surveyFormData,
+							createdAt: getCreatedAt()
+						}
+					: survey
+			)
+			localStorage.setItem(FORM_STORAGE, JSON.stringify(newSurveyList))
+			set(() => ({ surveyList: newSurveyList }))
+		} catch (e) {
 			throw new AppError(ERROR_TYPE.FAILED_SAVE_SURVEY)
 		}
-		localStorage.setItem(FORM_STORAGE, JSON.stringify(newSurveyList))
-		set(() => ({ surveyList: newSurveyList }))
 	},
 	deleteSurvey: (surveyId) => {
-		try {
-			const surveyList = get().surveyList || []
-			const targetSurvey = surveyList.find(({ id }) => id === surveyId)
-			if (!targetSurvey) throw new AppError(ERROR_TYPE.CANNOT_FIND_SURVEY)
+		const surveyList = get().surveyList || []
+		const targetSurvey = surveyList.find(({ id }) => id === surveyId)
+		if (!targetSurvey) {
+			throw new AppError(
+				ERROR_TYPE.CANNOT_FIND_SURVEY,
+				ERROR_MESSAGE.CANNOT_FIND_SURVEY(surveyId)
+			)
+		}
 
+		try {
 			const surveyListFiltered = surveyList.filter(({ id }) => id !== surveyId)
 			localStorage.setItem(FORM_STORAGE, JSON.stringify(surveyListFiltered))
 
 			set(() => ({ surveyList: surveyListFiltered }))
 		} catch (e) {
-			if (e instanceof AppError) {
-				throw e
-			}
 			throw new AppError(ERROR_TYPE.FAILED_DELETE_SURVEY)
 		}
 	}
